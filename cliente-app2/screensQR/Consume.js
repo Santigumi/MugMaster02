@@ -64,6 +64,10 @@ export default function consume() {
 	// Add event listener for the next page button
 	document.getElementById('nextPage').addEventListener('click', () => {
 		router.navigateTo('/loading');
+
+		setTimeout(() => {
+			router.navigateTo('/Email'); // Replace '/nextPage' with the actual route you want to navigate to after loading
+		}, 5000); // 5000 milliseconds = 5 seconds
 	});
 
 	// Listen for 'navigateTo' event and navigate to the received page
