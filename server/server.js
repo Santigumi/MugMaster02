@@ -135,7 +135,7 @@ httpServer.listen(5050, () => {
 });
 
 
-// ##################################### guarda la info del formulario
+// ##################################### guarda la info del formulario y al comida 
 
 const userInfoArray = [];
 
@@ -150,4 +150,17 @@ getIO().on('connection', (socket) => {
 // Start the server on port 5050
 httpServer.listen(5050, () => {
 	console.log('server starting 🚀🆙✔ on http://localhost:5050');
+});
+
+
+const surveyResponses = [];
+
+getIO().on('connection', (socket) => {
+  socket.on('submitSurvey', (data) => {
+    surveyResponses.push(data);
+    console.log('Survey response added:', data);
+    console.log('Current survey responses:', surveyResponses);
+  });
+
+  // Your existing socket event handlers...
 });
