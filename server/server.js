@@ -3,7 +3,6 @@ const cors = require('cors'); // Import CORS package
 const { createServer } = require('http');
 const { SerialPort, ReadlineParser } = require('serialport');
 const path = require('path'); // To serve static files
-
 const { initSocket, getIO } = require('./socket.js');
 const { delay, getPaginaActual, setPaginaActual } = require('./utils/helpers.js');
 
@@ -135,3 +134,32 @@ httpServer.listen(5050, () => {
 	console.log('server starting 🚀🆙✔ on http://localhost:5050');
 });
 console.log('probar duque');
+
+// ##################################### guarda la info del formulario y al comida
+
+const userInfoArray = [];
+
+getIO().on('connection', (socket) => {
+	socket.on('submitNames', (data) => {
+		userInfoArray.push(data);
+		console.log('User info added:', data);
+		console.log('Current user info array:', userInfoArray);
+	});
+});
+
+// Start the server on port 5050
+httpServer.listen(5050, () => {
+	console.log('server starting 🚀🆙✔ on http://localhost:5050');
+});
+
+const surveyResponses = [];
+
+getIO().on('connection', (socket) => {
+	socket.on('submitSurvey', (data) => {
+		surveyResponses.push(data);
+		console.log('Survey response added:', data);
+		console.log('Current survey responses:', surveyResponses);
+	});
+
+	// Your existing socket event handlers...
+});
