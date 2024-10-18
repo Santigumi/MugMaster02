@@ -1,15 +1,41 @@
-import { router, socket } from "../routes.js";
+import { router } from '../routes.js';
+import socket from '../socket.js';
+import { delay } from '../utils/helpers.js';
 
+export default async function loadPage() {
+	const app = document.getElementById('app');
 
-export default function loadPage() {
-  const app = document.getElementById("app");
-  app.innerHTML = `
+	app.innerHTML = loadPage1();
+	await delay(1000);
+
+	app.innerHTML = loadPage2();
+	await delay(1000);
+
+	app.innerHTML = loadPage3();
+	console.log('Cargamos el conteo 3 y esperamos para emitir');
+	await delay(2000);
+
+	socket.emit('terminaLoading');
+}
+
+function loadPage1() {
+	return `
         <h1>Load page</h1>
-        <p>3...</p>
-        <button id="nextPage"> > </button>
+        <p id="contador">1...</p>
+        <button id="nextPage"> Next </button>
     `;
-
-  document.getElementById("nextPage").addEventListener("click", () => {
-    router.navigateTo("/screen4");
-  });
+}
+function loadPage2() {
+	return `
+        <h1>Load page</h1>
+        <p id="contador">2...</p>
+        <button id="nextPage"> Next </button>
+    `;
+}
+function loadPage3() {
+	return `
+        <h1>Load page</h1>
+        <p id="contador">3...</p>
+        <button id="nextPage"> Next </button>
+    `;
 }

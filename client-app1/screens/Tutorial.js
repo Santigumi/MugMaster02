@@ -1,4 +1,5 @@
-import { router, socket } from '../routes.js';
+import { router } from '../routes.js';
+import socket from '../socket.js';
 
 export default function tutorialPage() {
 	const app = document.getElementById('app');
@@ -14,8 +15,8 @@ export default function tutorialPage() {
 		router.navigateTo('/screen3');
 	});
 
-	socket.on('navigateTo', (screen) => {
-		console.log('navigateTo' + screen);
-		router.navigateTo(screen);
-	});
+	/*  socket.on("navigateTo", (screen) => {
+    console.log("navigateTo<tutorialPage>:" + screen);
+    router.navigateTo(screen);
+  }); */
 }

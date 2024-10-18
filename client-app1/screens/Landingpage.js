@@ -1,4 +1,5 @@
-import { router, socket } from '../routes.js';
+import { router } from '../routes.js';
+import socket from '../socket.js';
 
 export default function landingPage() {
 	const app = document.getElementById('app');
@@ -12,8 +13,9 @@ export default function landingPage() {
 	document.getElementById('nextPage').addEventListener('click', () => {
 		socket.emit('changeScreen');
 	});
-	socket.on('navigateTo', (screen) => {
-		console.log('navigateTo' + screen);
-		router.navigateTo(screen);
-	});
+
+	/* socket.on("navigateTo", (screen) => {
+    console.log("navigateTo<Landingpage>:" + screen);
+    router.navigateTo(screen);
+  }); */
 }
