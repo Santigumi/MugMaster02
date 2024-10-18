@@ -3,7 +3,6 @@ const cors = require('cors'); // Import CORS package
 const { createServer } = require('http');
 const { SerialPort, ReadlineParser } = require('serialport');
 const path = require('path'); // To serve static files
-
 const { initSocket, getIO } = require('./socket.js');
 const { delay, getPaginaActual, setPaginaActual } = require('./utils/helpers.js');
 
@@ -129,6 +128,24 @@ const httpServer = createServer(app);
 
 // Initialize Socket.IO
 initSocket(httpServer);
+
+// Start the server on port 5050
+httpServer.listen(5050, () => {
+	console.log('server starting 🚀🆙✔ on http://localhost:5050');
+});
+
+
+// ##################################### guarda la info del formulario
+
+const userInfoArray = [];
+
+getIO().on('connection', (socket) => {
+	socket.on('submitNames', (data) => {
+		userInfoArray.push(data);
+		console.log('User info added:', data);
+		console.log('Current user info array:', userInfoArray);
+	});
+});
 
 // Start the server on port 5050
 httpServer.listen(5050, () => {
