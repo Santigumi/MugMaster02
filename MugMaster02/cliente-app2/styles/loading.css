@@ -1,0 +1,55 @@
+.loading-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.loading-icon {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    animation: spin 2s linear infinite;
+}
+
+.loading-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+h2 {
+    color: #1e3932;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#retry {
+    background-color: #00704A;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+#retry:hover {
+    background-color: #004e33;
+}
+
+.error-message {
+    color: #d62b1f;
+    margin: 15px 0;
+}
