@@ -4,7 +4,7 @@ require("dotenv/config");
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
+  process.env.SUPABASE_KEY
 );
 
 let apiInstance = new brevo.TransactionalEmailsApi();
@@ -14,12 +14,13 @@ apiInstance.setApiKey(
 );
 
 const sendEmailToLastParticipants = async () => {
+  console.log("=== Starting Email Service ===");
   try {
-    // Get latest record
+    console.log("Fetching data from Supabase...");
     const { data, error } = await supabase
       .from('usuarios')
-      .select('email1, email2, timestamp')
-      .order('timestamp', { ascending: false })
+      .select('email1, email2, createdtAt')
+      .order('createdtAt', { ascending: false })
       .limit(1)
       .single();
 
@@ -27,8 +28,11 @@ const sendEmailToLastParticipants = async () => {
     
     console.log('Participant data:', data);
     const emails = [data.email1, data.email2].filter(Boolean);
+    console.log('Filtered emails:', emails);
 
     let sendSmtpEmail = new brevo.SendSmtpEmail();
+    console.log('Creating email template...');
+    
     sendSmtpEmail.subject = "MugMaster Game Results";
     sendSmtpEmail.htmlContent = `
       <html>
@@ -48,6 +52,7 @@ const sendEmailToLastParticipants = async () => {
       name: "usuarios"
     }));
 
+    console.log('Sending emails...');
     const response = await apiInstance.sendTransacEmail(sendSmtpEmail);
     console.log('Emails sent successfully to:', emails);
     return response;
@@ -57,5 +62,12 @@ const sendEmailToLastParticipants = async () => {
     throw error;
   }
 };
-
 module.exports = { sendEmailToLastParticipants };
+
+// Add this at the bottom of the file, before module.exports
+console.log("Brevo service loaded");
+
+// Immediately invoke the function to test
+sendEmailToLastParticipants()
+  .then(() => console.log("Email process completed"))
+  .catch((err) => console.log("Error:", err));

@@ -1,4 +1,5 @@
 //const db = require("../db");
+const { sendEmailToLastParticipants } = require('../services/BREVO.JS');
 
 const {
 	terminaLoading,
@@ -15,7 +16,6 @@ const {
 const serverEvents = (socket, io) => {
 	socket.on('submitForm', async () => {
 		try {
-			const { sendEmailToLastParticipants } = require('../services/BREVO.JS');
 			await sendEmailToLastParticipants();
 			socket.emit('emailSent', { success: true });
 		} catch (error) {

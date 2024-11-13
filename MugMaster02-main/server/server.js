@@ -8,6 +8,7 @@ const { delay, getPaginaActual, setPaginaActual } = require('./utils/helpers.js'
 const { createUser } = require('./db/users.js');
 require('dotenv/config');
 
+
 // Creamos servidor express
 const app = express();
 
@@ -23,7 +24,7 @@ paginaActual = 'landingPage';
    Leer datos del Arduino
 **********/
 // Abrir puerto serial por donde escuchar al Arduino
-const port = new SerialPort({ path: 'COM3', baudRate: 9600 });  // lo cambie a com 3 porque en el pc de la U SE LLAMA DE ESTA FORMA (CAMBAIR A COM 4)
+const port = new SerialPort({ path: 'COM1', baudRate: 9600 });  // lo cambie a com 3 porque en el pc de la U SE LLAMA DE ESTA FORMA (CAMBAIR A COM 4)
 // Escuhcar el flujo de datos del puerto
 const datosFromArduino = port.pipe(new ReadlineParser({ delimiter: '\n' }));
 
