@@ -119,8 +119,9 @@ app.get('/test2', (req, res) => {
 	res.send(`<h2>Test iniciado</h2><p>${getPaginaActual()}</p>`);
 });
 
-// Serve static files from the client app directory
+
 app.use(express.static(path.join(__dirname, '../cliente-app2')));
+
 
 // Body parser middleware
 app.use(express.json());
