@@ -4,10 +4,11 @@ import socket from '../socket.js';
 export default function landingPage() {
 	const app = document.getElementById('app');
 	app.innerHTML = `
-        <h1>Mug master</h1>
-        <p>Participa con tu pareja y gana un cupón de un combo para dos</p>
-        <p>Oprime cualquier boton para continuar</p>
-        <button id="nextPage">(Boton invisible)</button>
+        <section>
+        <img id="titule" src='../Resources/img/mug&master.png'>
+        <p>Participate with your partner and win a coupon for a combo for two</p>
+        <p id="Play">Play</p>
+        </section>
     `;
 
 	document.getElementById('nextPage').addEventListener('click', () => {
