@@ -19,6 +19,19 @@ const router = new Router({
 	},
 });
 
+function loadCss(cssFile) {
+	let existingLink = document.getElementById('dynamic-css');
+	if (existingLink){
+		existingLink.remove();
+	}
+
+	let link = document.createElement('link');
+	link.id = 'dynamic-css';
+	link.rel = 'stylesheet';
+	link.href = `css/${cssFile}`;
+	document.head.appendChild(link);
+}
+
 function clearScripts() {
 	document.getElementById('app').innerHTML = '';
 }
@@ -27,6 +40,7 @@ router.add('/', () => {
 	Screen = 'landingPage';
 	console.log(Screen);
 	clearScripts();
+	loadCss('../styles/landing.css')
 	landingPage();
 });
 
