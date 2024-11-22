@@ -68,6 +68,6 @@ module.exports = { sendEmailToLastParticipants };
 console.log("Brevo service loaded");
 
 // Immediately invoke the function to test
-sendEmailToLastParticipants()
-  .then(() => console.log("Email process completed"))
-  .catch((err) => console.log("Error:", err));
+// sendEmailToLastParticipants()
+//   .then(() => console.log("Email process completed"))
+//   .catch((err) => console.log("Error:", err));
