@@ -15,7 +15,6 @@ const initSocket = (httpServer) => {
 	// de mensajes <orejas>
 	io.on('connection', (socket) => {
 		console.log('New client connected', socket.id);
-
 		handleEvents(socket, io);
 	});
 };
