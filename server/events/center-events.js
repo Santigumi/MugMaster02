@@ -1,5 +1,4 @@
-//const db = require("../db");
-const { sendEmailToLastParticipants } = require('../services/BREVO.JS');
+const { sendEmailToLastParticipants, updateCouponSelection } = require('../services/BREVO.JS');
 
 const {
 	terminaLoading,
@@ -14,9 +13,10 @@ const {
 
 // On para cada tipo de mensaje que debe escuchar el server
 const serverEvents = (socket, io) => {
-	socket.on('submitForm', async () => {
+	socket.on('submitForm', async (selectedoption) => {
 		try {
 			await sendEmailToLastParticipants();
+			await updateCouponSelection(selectedoption)
 			socket.emit('emailSent', { success: true });
 		} catch (error) {
 			console.error('Error in submit handler:', error);
@@ -28,6 +28,10 @@ const serverEvents = (socket, io) => {
 	socket.on('volverGame', () => volverGame(socket, io));
 };
 
+
+
+
+
 /*
 const userEvents = (socket, io) => {
   socket.on("event-user", () => reciveKeys(socket, db, io));
@@ -38,9 +42,10 @@ const arduinoEvents = (socket, io) => {
   socket.on("event-user", () => keyspressed(socket, db, io));
 };
 */
-
+  
 module.exports = {
 	serverEvents,
+	updateCouponSelection,
 	//userEvents,
 	//arduinoEvents,
 };
