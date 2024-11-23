@@ -6,12 +6,12 @@ export default function Email() {
   <h1>¡Felicitaciones!</h1>
             <p>Tu cupón fue enviado a tu correo.</p> `;
 
-	document.getElementById('nextPage').addEventListener('click', () => {
-		socket.emit('changeScreen'); // Emitiendo el evento 'changeScreen' al servidor
-	});
+	// document.getElementById('nextPage').addEventListener('click', () => {
+	// 	socket.emit('changeScreen'); // Emitiendo el evento 'changeScreen' al servidor
+	// });
 
 	// Escuchar el evento 'navigateTo' y navegar a la página recibida
-	socket.on('navigateTo', (screensQR) => {
-		router.navigateTo(screensQR); // Navegar a la página enviada por el servidor
-	});
-}
+// 	socket.on('navigateTo', (screensQR) => {
+// 		router.navigateTo(screensQR); // Navegar a la página enviada por el servidor
+// 	});
+ }
