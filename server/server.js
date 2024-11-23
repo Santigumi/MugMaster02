@@ -18,7 +18,7 @@ app.use(cors());
 // The last button pressed
 let lastButtonPressed = '';
 // Para seguimiento de la pag que esta mostrando el front
-paginaActual = 'landingPage';
+// let paginaActual = 'landingPage';
 
 /*********
    Leer datos del Arduino
@@ -119,10 +119,30 @@ app.get('/test2', (req, res) => {
 	res.send(`<h2>Test iniciado</h2><p>${getPaginaActual()}</p>`);
 });
 
+// Endpoints para clientes específicos
+app.use('/mugmaster', express.static(path.join(__dirname, '../client-app1')));  // Sirve archivos estáticos de la carpeta 'Mugmaster'
+app.use('/mugmasterform', express.static(path.join(__dirname, '../cliente-app2')));  // Sirve archivos estáticos de la carpeta 'MugmasterForm'
 
-app.use(express.static(path.join(__dirname, '../cliente-app2')));
+// Crear un endpoint para enviar datos a cada cliente específico
+app.post('/mugmaster/submit', (req, res) => {
+    const data = req.body; // Asume que los datos vienen en el cuerpo de la solicitud
+    console.log('Datos recibidos para Mugmaster:', data);
 
+    // Aquí puedes agregar la lógica que desees para manejar los datos
+    res.json({ status: 'success', message: 'Datos recibidos para Mugmaster' });
+});
 
+app.post('/mugmasterform/submit', (req, res) => {
+    const data = req.body; // Asume que los datos vienen en el cuerpo de la solicitud
+    console.log('Datos recibidos para MugmasterForm:', data);
+
+    // Aquí puedes agregar la lógica que desees para manejar los datos
+    res.json({ status: 'success', message: 'Datos recibidos para MugmasterForm' });
+});
+
+// Configurar Express para servir archivos estáticos de la carpeta 'node_modules'
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
+app.use('/Resources', express.static('Resources'));
 // Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
