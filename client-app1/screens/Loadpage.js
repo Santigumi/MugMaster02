@@ -20,22 +20,16 @@ export default async function loadPage() {
 
 function loadPage1() {
 	return `
-        <h1>Load page</h1>
         <p id="contador">1...</p>
-        <button id="nextPage"> Next </button>
     `;
 }
 function loadPage2() {
 	return `
-        <h1>Load page</h1>
         <p id="contador">2...</p>
-        <button id="nextPage"> Next </button>
     `;
 }
 function loadPage3() {
 	return `
-        <h1>Load page</h1>
         <p id="contador">3...</p>
-        <button id="nextPage"> Next </button>
     `;
 }
