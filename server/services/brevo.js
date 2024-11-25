@@ -29,7 +29,7 @@ const updateCouponSelection = async (nombreProducto) => {
   }
 };
 
-const sendEmailToLastParticipants = async () => {
+const sendEmailToLastParticipants = async (nombreProducto) => {
   console.log("=== Starting Email Service ===");
   try {
     console.log("Fetching data from Supabase...");
@@ -48,28 +48,50 @@ const sendEmailToLastParticipants = async () => {
 
     console.log('Filtered emails:', emails);
     let sendSmtpEmail = new brevo.SendSmtpEmail();    
-    sendSmtpEmail.templateId = 2;
+  
+    switch (nombreProducto) {
+      case 'Hot-tea':
+        sendSmtpEmail.templateId = 10;
+        break;
+      case 'Snacks':
+        sendSmtpEmail.templateId = 9;
+        break;
+      case 'Cakepops':
+        sendSmtpEmail.templateId = 8;
+        break;
+      case 'Breakfast':
+        sendSmtpEmail.templateId = 7;
+        break;
+      case 'Coffee':
+        sendSmtpEmail.templateId = 6;
+        break;
+      case 'cold-drinks':
+        sendSmtpEmail.templateId = 5;
+        break;
+      default:
+        throw new Error('Cupón no válido.');
+    }
     
     console.log(data.name1);
     
-    sendSmtpEmail.params = {
-      name1: data.name1 || "Cliente",
-      name2: data.name2 || "Cliente"
-    }
+    sendSmtpEmail.dynamicTemplateData = {
+      "name1": data.name1,
+      "name2": data.name2
+    };
 
     sendSmtpEmail.sender = {
       name: "MugMaster Game",
       email: process.env.SENDER_EMAIL
     };
     
-    sendSmtpEmail.to = emails.map((email, index) => ({
-      email: email,
-      name: names[index] || "Usuario"
+    sendSmtpEmail.to = emails.map(email => ({
+      email: email
     }));
 
     console.log('Sending emails...');
     const response = await apiInstance.sendTransacEmail(sendSmtpEmail);
     console.log('Emails sent successfully to:', emails);
+    
     return response;
 
   } catch (error) {
