@@ -15,7 +15,7 @@ const {
 const serverEvents = (socket, io) => {
 	socket.on('submitForm', async (selectedoption) => {
 		try {
-			await sendEmailToLastParticipants();
+			await sendEmailToLastParticipants(selectedoption);
 			await updateCouponSelection(selectedoption)
 			socket.emit('emailSent', { success: true });
 		} catch (error) {
