@@ -1,0 +1,90 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+}
+
+@font-face {
+    font-family: 'Take coffee';
+    src: url('../../Resources/tipography/Take\ Coffee.otf');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: yellow;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-image:
+        linear-gradient(rgba(241, 172, 44, 0.45), rgba(171, 115, 84, 0.45)),  /* Color con 50% de opacidad */
+        url('../../Resources/img/background1.png');                 /* Imagen de fondo */
+    background-size: cover;        /* Ajusta la imagen para cubrir el área */
+    background-position: center;   /* Centra la imagen */
+}
+
+section { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    max-height: 1500px;
+    padding: 1px;
+}
+
+
+p {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: rgb(238, 236, 233);
+    margin: 1px;
+    font-family: 'Take coffee', sans-serif;
+    font-size: 16pt;
+    text-shadow: 
+        -1px -1px 0 #3d2b1f,   /* Sombra arriba a la izquierda */
+         1px -1px 0 #3d2b1f,   /* Sombra arriba a la derecha */
+        -1px  1px 0 #3d2b1f,   /* Sombra abajo a la izquierda */
+         1px  1px 0 #3d2b1f;   /* Sombra abajo a la derecha */
+}
+
+#contador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    color: white;
+    width: 50vmin;  /* Tamaño dinámico que cambia con el tamaño de la ventana */
+    height: 25vmin;  /* Altura proporcional al ancho */
+    
+    min-width: 150px;  /* Valor mínimo para el ancho */
+    min-height: 75px;  /* Valor mínimo para la altura */
+    
+    max-width: 400px;   /* Limita el tamaño máximo en pantallas grandes */
+    max-height: 200px;  /* Limita el tamaño máximo en pantallas grandes */
+    
+    background-image: url('/Resources/img/Boton_1.png');
+    background-size: contain;  /* Ajusta la imagen para que se muestre completa */
+    background-repeat: no-repeat;  /* Evita que se repita la imagen */
+    background-position: center;  /* Centra la imagen en el contenedor */
+    
+    padding: 2%;
+    margin: 1%;
+    
+    font-family: 'Take coffee', sans-serif;
+    font-size: 10vmin;  /* Proporcional al menor valor entre ancho y alto de la ventana */
+    
+    aspect-ratio: 2 / 1.7;  /* Mantiene la relación de aspecto (2 ancho x 1 alto) */
+}
+
