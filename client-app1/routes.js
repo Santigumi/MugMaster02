@@ -48,6 +48,7 @@ router.add('/tutorialPage', () => {
 	Screen = 'tutorialPage';
 	console.log(Screen);
 	clearScripts();
+	loadCss('../styles/tutorial.css')
 	tutorialPage();
 });
 
