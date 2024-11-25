@@ -26,7 +26,7 @@ html, body {
     padding: 0;
     box-sizing: border-box;
     background-image:
-        linear-gradient(rgba(255, 171, 53, 0.25), rgba(0, 0, 0, 0.8)),  /* Color con 50% de opacidad */
+        linear-gradient(rgba(241, 172, 44, 0.45), rgba(171, 115, 84, 0.45)),  /* Color con 50% de opacidad */
         url('../../Resources/img/background1.png');                 /* Imagen de fondo */
     background-size: cover;        /* Ajusta la imagen para cubrir el área */
     background-position: center;   /* Centra la imagen */
@@ -54,7 +54,10 @@ section {
 }
 
 p {
-    color: rgb(157, 45, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: rgb(205, 116, 7);
     margin: 1px;
     font-family: 'Take coffee', sans-serif;
     font-size: 16pt;
