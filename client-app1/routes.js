@@ -56,6 +56,7 @@ router.add('/loadPage', () => {
 	Screen = 'loadPage';
 	console.log(Screen);
 	clearScripts();
+	loadCss('../styles/load.css')
 	loadPage();
 });
 
