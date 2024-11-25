@@ -4,9 +4,19 @@ import socket from '../socket.js';
 export default function tutorialPage() {
 	const app = document.getElementById('app');
 	app.innerHTML = `
-        <h1>Tutorial</h1>
-        <p>Oprime las flechas cuando sea el momento correcto para evitar que Mug derrama el vaso de café starbucks y gana un cupón para un combo para dos personas</p>
-        <button id="nextPage"> Correcto! </button>
+		<section>
+		<div id="top">
+		<img id="titule"src="/Resources/img/How to plat.png">
+		</div>
+		<div id="Center">
+        <p>Press the corresponding arrow keys when the arrows rising reach the top marker, follow the rhythm of the music. Keep the coffee balanced by avoiding mistakes.</p>
+		<img id="Mug" src="/Resources/img/Mug.png">
+        <div id="nextPage">
+		<img id="arrows" src="/Resources/img/Arrows.png">
+		<p id="next">Next</p>
+		</div>
+		</div>
+		</section>
     `;
 
 	document.getElementById('nextPage').addEventListener('click', () => {
@@ -14,9 +24,4 @@ export default function tutorialPage() {
 		socket.emit('event1', { message: 'Un nuevo juego ha empezado' });
 		router.navigateTo('/screen3');
 	});
-
-	/*  socket.on("navigateTo", (screen) => {
-    console.log("navigateTo<tutorialPage>:" + screen);
-    router.navigateTo(screen);
-  }); */
 }
