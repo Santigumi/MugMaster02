@@ -6,7 +6,7 @@ export default function tutorialPage() {
 	app.innerHTML = `
 		<section>
 		<div id="top">
-		<img id="titule"src="/Resources/img/How to plat.png">
+		<img id="titule"src="/Resources/img/How_to_plat.png">
 		</div>
 		<div id="Center">
         <p>Press the corresponding arrow keys when the arrows rising reach the top marker, follow the rhythm of the music. Keep the coffee balanced by avoiding mistakes.</p>
