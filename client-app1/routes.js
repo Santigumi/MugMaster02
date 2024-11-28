@@ -62,21 +62,25 @@ router.add('/loadPage', () => {
 
 router.add('/gamePage', () => {
 	clearScripts();
+	loadCss('../styles/game.css')
 	gamePage();
 });
 
 router.add('/winPage', () => {
 	clearScripts();
+	loadCss('../styles/win.css')
 	winPage();
 });
 
 router.add('/losePage', () => {
 	clearScripts();
+	loadCss('../styles/lose.css')
 	losePage();
 });
 
 router.add('/qrPage', () => {
 	clearScripts();
+	loadCss('../styles/qr.css')
 	qrPage();
 });
 
