@@ -12,6 +12,12 @@ function eliminarFlecha(flechaId) {
 	const filtrado = flechasBoard.filter((e) => e.buttonId !== flechaId);
 	flechasBoard = [...filtrado];
 	//console.log("Nuevo flechasBoard", flechasBoard);
+
+	const flechaElemento = document.getElementById(`tablero${flechaId}`);
+    if (flechaElemento) {
+        flechaElemento.parentNode.removeChild(flechaElemento);
+    }
+	console.log("Nuevo flechasBoard", flechasBoard);
 }
 
 export { flechasBoard, delay, eliminarFlecha };
