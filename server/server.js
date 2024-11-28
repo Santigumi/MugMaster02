@@ -37,6 +37,9 @@ datosFromArduino.on('data', (data) => {
 		//TODO: Validar estructura Json
 		const buttonData = JSON.parse(data.trim());
 
+		let jsonData = JSON.parse(data);  // Convierte el string a objeto
+		// Accede al valor de la flecha
+		let flechaPresionada = jsonData.flecha; 
 		// Validar si se presiono una flecha
 		if ('flecha' in buttonData) {
 			if (getPaginaActual() === 'landingPage') {
@@ -48,11 +51,14 @@ datosFromArduino.on('data', (data) => {
 			}
 
 			if (getPaginaActual() === 'tutorialPage') {
-				// Si estamos en tutorialPage le emitimos al front que cambie de screen
-				getIO().emit('navigateTo', 'loadPage');
-				setPaginaActual('loadPage');
-				console.log('Boton procesado<tutorialPage>:', buttonData);
-				return;
+
+				if(flechaPresionada === "Derecha1" || flechaPresionada === "Derecha2"){
+					// Si estamos en tutorialPage le emitimos al front que cambie de screen
+					getIO().emit('navigateTo', 'loadPage');
+					setPaginaActual('loadPage');
+					console.log('Boton procesado<tutorialPage>:', buttonData);
+					return;
+				}
 			}
 
 			if (getPaginaActual() === 'loadPage') {
@@ -69,6 +75,30 @@ datosFromArduino.on('data', (data) => {
 				return;
 			}
 
+			if (getPaginaActual() === 'losePage') {
+				if(flechaPresionada === "Derecha1" || flechaPresionada === "Derecha2"){
+					// Si estamos en tutorialPage le emitimos al front que cambie de screen
+					getIO().emit('navigateTo', 'tutorialPage');
+					setPaginaActual('tutorialPage');
+					console.log('Boton procesado<tutorialPage>:', buttonData);
+					return
+				} else if (flechaPresionada === "Izquierda1" || flechaPresionada === "Izquierda2"){
+					getIO().emit('navigateTo', '');
+					setPaginaActual('landingPage');
+					console.log('Boton procesado<landingPage>:', buttonData);
+					return
+				}
+			}	
+			
+			if (getPaginaActual() === 'winPage') {
+				if(flechaPresionada === "Derecha1" || flechaPresionada === "Derecha2"){
+					// Si estamos en tutorialPage le emitimos al front que cambie de screen
+					getIO().emit('navigateTo', 'QrPage');
+					setPaginaActual('qrPage');
+					console.log('Boton procesado<tutorialPage>:', buttonData);
+					return
+				}
+			}
 			console.log('Boton procesad <SinPage>:', buttonData);
 		}
 	} catch (err) {
