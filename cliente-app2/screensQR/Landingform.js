@@ -3,25 +3,25 @@ import { router, socket } from '../routes.js';
 export default function Landingform() {
 	const app = document.getElementById('app');
 	app.innerHTML = `
-        <h1>Congratulations!</h1>
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Starbucks_Corporation_Logo_2011.svg/1200px-Starbucks_Corporation_Logo_2011.svg.png">
         <p>You have helped Mug! To claim your coupon, both participants need to fill out the following form:</p>
 
         <form id="claimForm">
             <div>
-                <label for="name1">Name (Player 1):</label>
+                <label for="name1">Name Player 1:</label>
                 <input type="text" id="name1" name="name1" required>
             </div>
             <div>
-                <label for="email1">Email (Player 1):</label>
+                <label for="email1">Email Player 1:</label>
                 <input type="email" id="email1" name="email1" required>
             </div>
             <br>
             <div>
-                <label for="name2">Name (Player 2):</label>
+                <label for="name2">Name Player 2:</label>
                 <input type="text" id="name2" name="name2" required>
             </div>
             <div>
-                <label for="email2">Email (Player 2):</label>
+                <label for="email2">Email Player 2:</label>
                 <input type="email" id="email2" name="email2" required>
             </div>
             <br>
