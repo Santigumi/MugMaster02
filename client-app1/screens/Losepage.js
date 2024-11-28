@@ -1,21 +1,22 @@
-import { router } from '../routes.js';
-import socket from '../socket.js';
 
 export default function losePage() {
 	const app = document.getElementById('app');
 	app.innerHTML = `
-        <h1>Han perdido :c </h1>
-        <p>Pueden volver a competir o retirarse</p>
-        <button id="backPage"> Volver a intentar </button>
-        <button id="nextPage"> Salir </button>
+        <section>
+        <img id="titule" src="/Resources/img/Mug.png">
+        <div id="center">
+        <img id="text" src="/Resources/img/lost.png">
+        <div id="buttons">
+        <div id="nextPage">
+		<img id="arrows1" src="/Resources/img/Arrows.png">
+		<p id="next">Quit</p>
+		</div>
+        <div id="backPage">
+		<img id="arrows" src="/Resources/img/Arrows.png">
+		<p id="next">Retry</p>
+		</div>  
+        </div>
+        </div>  
+        </section>
     `;
-
-	document.getElementById('backPage').addEventListener('click', () => {
-		socket.emit('volverGame');
-	});
-
-	document.getElementById('nextPage').addEventListener('click', () => {
-		router.navigateTo('/');
-		// socket.emit("event2");
-	});
 }
