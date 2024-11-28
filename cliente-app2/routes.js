@@ -20,10 +20,24 @@ function clearScripts() {
   document.getElementById("app").innerHTML = "";
 }
 
+function loadCss(cssFile) {
+	let existingLink = document.getElementById('dynamic-css');
+	if (existingLink){
+		existingLink.remove();
+	}
+
+	let link = document.createElement('link');
+	link.id = 'dynamic-css';
+	link.rel = 'stylesheet';
+	link.href = `css/${cssFile}`;
+	document.head.appendChild(link);
+}
+
 router.add("/", async () => {
   Screen = 'landingform';
   console.log(Screen);
   clearScripts();
+  loadCss('../styles/landingform.css')
   landingForm();
 });
 
@@ -31,6 +45,7 @@ router.add("/consume", async () => {
   Screen = 'consume';
   console.log(Screen);
   clearScripts();
+  loadCss('../styles/consume.css')
   consume();
 });
 
@@ -38,6 +53,7 @@ router.add("/loading", async () => {
   Screen = 'loading';
   console.log(Screen);
   clearScripts();
+  loadCss('../styles/loading.css')
   loading();
 });
 
@@ -45,6 +61,7 @@ router.add("/email", async () => {
   Screen = 'email';
   console.log(Screen);
   clearScripts();
+  loadCss('../styles/email.css')
   email();
 });
 
@@ -52,6 +69,7 @@ router.add("/error", async () => {
   Screen = 'error';
   console.log(Screen);
   clearScripts();
+  loadCss('../styles/error.css')
   error();
 });
 
