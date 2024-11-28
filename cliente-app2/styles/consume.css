@@ -1,8 +1,52 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+@font-face {
+  font-family: 'Take coffee';
+  src: url('../../Resources/tipography/Take\ Coffee.otf');
+}
+
+@font-face {
+  font-family: 'Melts Script';
+  src: url('../../Resources/tipography/Melts\ Script\ Rough\ Sanscript.ttf')
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image:
+  linear-gradient(rgba(90, 72, 1, 0.3), rgba(82, 73, 33, 0.3)),  
+  url('../../Resources/img/background3.png');               
+  background-size: cover; 
+  background-position: center;  
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #f4f7f6;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-family: 'Melts Script', sans-serif;
+  font-size: 40pt;
+}
+
 .options {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: 1fr 1fr 1fr; /* 3 equal-width columns */
+  grid-template-rows: 1fr 1fr;
+  gap: 1em;
+  padding: 2em;
+  width: 50%;
+  height: 50%;
 }
 
 .option {
@@ -13,6 +57,10 @@
   cursor: pointer;
   transition: transform 0.3s ease;
   background: none;
+  width: 100%;
+  height: 100%;
+  grid-column: span 1; /* Optional: ensures each option takes up one column */
+  grid-row: span 1;
 }
 
 .option:hover {
@@ -54,8 +102,57 @@
   font-size: 1.2em;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  box-shadow:  0.2em 0.2em rgba(17, 17, 17, 0.5)
 }
 
 #submit:hover {
   background-color: #004F35;
 }
+
+  @media (max-width: 768px) {
+
+    .app{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      width: 80%;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* 3 equal-width columns */
+      grid-template-rows: 1fr 1fr 1fr;
+      gap: 1em;
+      padding: 2em;
+      width: 80%;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .option {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .option p {
+      font-family: Arial, Helvetica, sans-serif;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      padding-left: 0;
+    }
+    
+    #submit {
+      font-size: 1em;
+      width: 40%;
+    }
+  }
+
+
