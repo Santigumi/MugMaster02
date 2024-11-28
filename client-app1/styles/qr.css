@@ -1,0 +1,103 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+}
+
+@font-face {
+    font-family: 'Take coffee';
+    src: url('../../Resources/tipography/Take\ Coffee.otf');
+}
+
+@font-face {
+    font-family: 'Melts Script';
+    src: url('../../Resources/tipography/Melts\ Script\ Rough\ Sanscript.ttf')
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-image:
+        linear-gradient(rgba(95, 58, 21, 0.45), rgba(90, 71, 20, 0.45)),  /* Color con 50% de opacidad */
+        url('../../Resources/img/Background3.png');                 /* Imagen de fondo */
+    background-size: cover;        /* Ajusta la imagen para cubrir el área */
+    background-position: center;   /* Centra la imagen */
+}
+
+section { 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    height: 75%;
+    padding: 1px;
+}
+
+#titule {
+    width: 30%;
+    box-sizing: content-box;
+    margin: 1px;
+}
+
+button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    height: 8em;
+    border: 4px solid #6c2b11;
+    border-radius: 1em;
+    background: linear-gradient(to bottom, #B9703C 0%, #A1542B 50%, #8D371C 100%); 
+    padding: 2px;
+    margin: 1px;
+    font-family: 'Take coffee', sans-serif;
+    font-size: 1m;
+}
+
+#backPage {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    min-width: 10px;
+    min-height: 30px;
+    width: 25%;
+    height: 12.5%;
+    max-width: 800px;
+    max-height: 1000px;
+    border: 5px solid #6c2b11;
+    border-radius: 0.7em;
+    background: linear-gradient(to bottom, #B9703C 0%, #A1542B 50%, #8D371C 100%); 
+    padding: 2px;
+    margin: 1px;
+    font-family: 'Take coffee', sans-serif;
+}
+
+#arrows {
+    height: 80%;
+}
+
+p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: rgb(251, 251, 251);
+    margin: 1px;
+    font-family: 'Take coffee', sans-serif;
+    font-size: 2em;
+}

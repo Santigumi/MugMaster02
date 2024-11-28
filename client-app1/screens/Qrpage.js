@@ -1,15 +1,14 @@
-import { router } from '../routes.js';
-import socket from '../socket.js';
 
 export default function qrPage() {
 	const app = document.getElementById('app');
 	app.innerHTML = `
-        <h1>Formulario</h1>
-        <p>Llenen el siguiente formulario para reclamar su cupon</p>
-        <button id="goToInicio"> *Inicio* </button>
+	<section>
+	<img id="titule" src="/Resources/img/qr.png">
+	<p>“Congratulations, you have won. Fill out the form to get your cupon.”</p>
+	    <div id="backPage">
+		<img id="arrows" src="/Resources/img/Arrows.png">
+		<p id="next">Finish</p>
+		</div>  
+	</section>
     `;
-
-	document.getElementById('goToInicio').addEventListener('click', () => {
-		socket.emit('volverGame');
-	});
 }
