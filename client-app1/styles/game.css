@@ -1,0 +1,73 @@
+#app {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: yellow;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-image:
+        linear-gradient(rgba(241, 172, 44, 0.45), rgba(171, 115, 84, 0.45)),  /* Color con 50% de opacidad */
+        url('../../Resources/img/Backgame.png');                 /* Imagen de fondo */
+    /* background-size: cover;        Ajusta la imagen para cubrir el área */
+    background-position: center;   /* Centra la imagen */
+}
+
+
+.contenedor {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+}
+
+.flechas-column {
+    position: relative; /* Necesario para posicionar elementos internos con posición absoluta */
+    width: 30%; /* Ajusta según el diseño */
+    height: 100%;
+}
+
+.flechas-column .tablero {
+    width: 33.33%;      /* Cada flecha ocupa un tercio del contenedor */
+    height: auto;       /* Ajusta la altura proporcionalmente si es necesario */
+    position: absolute; 
+}
+
+#sensor {
+    display: flex;
+    flex-direction: column;
+    position: absolute; /* Fija el sensor en la parte inferior */
+    /* bottom: 0;
+    left: 50%; /* Centrar horizontalmente */
+    transform: translateX(-50%); /* Ajuste para centrar */
+    width: 100%; /* Ancho fijo */
+    height: 100px; /* Altura del sensor */
+    background-color: rgba(0, 255, 0, 0.1); /* Opcional para visualización */
+    z-index: 10; /* Asegura que el sensor esté encima de otros elementos */
+} 
+
+
+.tablero {
+    width: 33.33%;   /* Cada flecha ocupa un tercio del contenedor */
+    aspect-ratio: 1; /* Mantiene una proporción cuadrada */
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid transparent;
+  }
+  
+  .flechas-column .figura {
+    position: absolute;
+    bottom: 50%; /* Coloca la figura en la mitad de la parte inferior del sensor */
+    left: 50%;  /* Centrado horizontal */
+    transform: translateX(-50%) translateY(50%); /* Asegura el centrado correcto */
+    width: 33.33%;; /* Ajusta el tamaño de las figuras */
+    z-index: 1; /* Si las flechas están por encima, este índice las dejará por debajo */
+}

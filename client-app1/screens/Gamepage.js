@@ -21,20 +21,42 @@ export default async function gamePage() {
 	const app = document.getElementById('app');
 	app.innerHTML = `
       <div id="contenedor" class="contenedor">
-        <div id="lineatiempo">
+	  <div id="player1" class="flechas-column">
+		<div id="Figures">
+	    <img id="Figure1" data-posicion="1" src="/Resources/img/Left1.png">
+        <img id="Figure2" data-posicion="2" src="/Resources/img/Right1.png">
+        <img id="Figure3" data-posicion="3" src="/Resources/img/Up1.png">		
+		</div>
+	  </div>
+	 
+	  <div id="lineatiempo">
           <div id="lineatiempo-bar"></div>
-        </div>
-        <div id="lineavida">
+	    </div>
+       
+		<div id="lineavida">
           <div id="lineavida-bar"></div>
         </div>
-        <h1>Game</h1>
-        <p>inserte a Mug y los triangulos</p>
-        <button id="winPage">:)</button>
-        <button id="losePage">:(</button>
-        <p id="aciertos" class="contador">Aciertos: </p>
+        
+		<p id="aciertos" class="contador">Aciertos: </p>
         <p id="errores" class="contador">Errores: </p>
-        <div id="sensor"></div>
-      </div>
+
+		<div id="player2" class="flechas-column">
+		<div ="Figures2">
+		</div>
+		</div>
+		</div>
+        
+		<div id="sensor">
+		</div>
+
+		<div id="control">
+		<img id="Figure1" data-posicion="1" src="/Resources/img/Left1.png">
+        <img id="Figure2" data-posicion="2" src="/Resources/img/Right1.png">
+        <img id="Figure3" data-posicion="3" src="/Resources/img/Up1.png">		
+        <img id="Figure4" data-posicion="1" src="/Resources/img/Left1.png">
+        <img id="Figure5" data-posicion="2" src="/Resources/img/Right1.png">
+        <img id="Figure6" data-posicion="3" src="/Resources/img/Up1.png">
+		</div>
     `;
 
 	const contenedor = document.getElementById('contenedor');
@@ -63,7 +85,6 @@ export default async function gamePage() {
 	});
 
 	renderBoard();
-
 	animarTiempo();
 }
 
@@ -127,26 +148,33 @@ function validarSensor(tipoFlecha = IZQUIERDDA, jugador = 1) {
 	console.log('Error en el sensor', tipoFlecha);
 }
 
-function crearFlecha(buttonData) {
+// Ejemplo de cómo utilizar la función cuando creas una flecha
+function crearFlecha(buttonData, jugador) {
 	const elemento = document.createElement('div');
-	const { flecha, buttonId } = buttonData;
-
-	elemento.setAttribute('id', `tablero${buttonId}`);
+	elemento.setAttribute('id', `tablero${buttonData.buttonId}`);
 	elemento.setAttribute('class', 'tablero');
-	if (flecha == 1) elemento.style.backgroundColor = '#ff0000';
-	if (flecha == 2) elemento.style.backgroundColor = '#00ff00';
-	if (flecha == 3) elemento.style.backgroundColor = '#0000ff';
-
-	const valorFila = buttonData.posy;
-	elemento.style.top = valorFila + 'px';
-
-	const valorColumna = buttonData.posx;
-	elemento.style.left = valorColumna + 'px';
-
-	const contenedor = document.getElementById('contenedor');
-	contenedor.appendChild(elemento);
-}
-
+	
+	// Establece la imagen de la flecha
+	if (buttonData.flecha === IZQUIERDDA) elemento.style.backgroundImage = "url('/Resources/img/Left.png')";
+	if (buttonData.flecha === DERECHA) elemento.style.backgroundImage = "url('/Resources/img/Right.png')";
+	if (buttonData.flecha === ARRIBA) elemento.style.backgroundImage = "url('/Resources/img/Up.png')";
+	
+	elemento.style.backgroundSize = 'cover';
+	elemento.style.backgroundRepeat = 'no-repeat';
+	elemento.style.backgroundPosition = 'center';
+  
+	// Ajustar ancho
+	const columna = document.getElementById(jugador === 1 ? 'player1' : 'player2');
+	elemento.style.width = `${columna.clientWidth / 3}px`;
+  
+	// Calcular posición de la flecha según la sección
+	const seccion = columna.clientWidth / 3;
+	let posX = (buttonData.flecha - 1) * seccion;
+	elemento.style.left = `${posX}px`;
+  
+	columna.appendChild(elemento);
+  }
+  
 function getFlecha(buttonId) {
 	return document.getElementById(`tablero${buttonId}`);
 }
@@ -267,10 +295,36 @@ socket.on('nuevaFlecha', (buttonData) => {
 
 		// Ajustamos la posicon de la flecha ya que el server la manda
 		// como posx:0 posy:0.
-
-		const margen = 5;
-		buttonDataId1.posx = base1 + buttonDataId1.flecha * (100 + margen);
-		buttonDataId2.posx = base2 + buttonDataId2.flecha * (100 + margen);
+		const contenedor1 = document.getElementById('player1');
+		const contenedor2 = document.getElementById('player2');
+		
+		const anchoContenedor1 = contenedor1.clientWidth;
+		const anchoContenedor2 = contenedor2.clientWidth;
+	
+		// Calcula el margen como un porcentaje del ancho del contenedor (por ejemplo, el 10%)
+		// const margen1 = anchoContenedor1 * 0.1;
+		// const margen2 = anchoContenedor2 * 0.1;
+	
+		// Divide el ancho del contenedor entre 3 para obtener el ancho de cada sección
+		const seccion1 = anchoContenedor1 / 3;
+		const seccion2 = anchoContenedor2 / 3;
+	
+		if (buttonDataId1.flecha === IZQUIERDDA) {
+			buttonDataId1.posx = 0;  // Primera sección
+		  } else if (buttonDataId1.flecha === ARRIBA) {
+			buttonDataId1.posx = seccion1;  // Segunda sección
+		  } else if (buttonDataId1.flecha === DERECHA) {
+			buttonDataId1.posx = 2 * seccion1;  // Tercera sección
+		  }
+		  
+		  // Lo mismo para buttonDataId2
+		  if (buttonDataId2.flecha === IZQUIERDDA) {
+			buttonDataId2.posx = 0;
+		  } else if (buttonDataId2.flecha === ARRIBA) {
+			buttonDataId2.posx = seccion2;
+		  } else if (buttonDataId2.flecha === DERECHA) {
+			buttonDataId2.posx = 2 * seccion2;
+		  }
 
 		// Flecha para jugardor 1
 		flechasBoard.push(buttonDataId1);
@@ -280,7 +334,28 @@ socket.on('nuevaFlecha', (buttonData) => {
 		console.log('gamePage <flechasBoard1>', flechasBoard);
 
 		// Se crea en el DOM las flechas
-		crearFlecha(buttonDataId1);
-		crearFlecha(buttonDataId2);
+		crearFlecha(buttonDataId1, 1);
+		crearFlecha(buttonDataId2, 2);
 	}
 });
+
+
+function ajustarTamañoFlechas() {
+    const columnas = document.querySelectorAll('.flechas-column');
+
+    columnas.forEach(columna => {
+        // Seleccionar flechas dinámicas (si existen)
+        const flechas = columna.querySelectorAll('.tablero');
+        flechas.forEach(flecha => {
+            flecha.style.width = `${columna.clientWidth / 3}px`;  // Un tercio del contenedor
+            flecha.style.height = `${columna.clientWidth / 3}px`; // Mantener cuadrado
+        });
+    });
+}
+
+
+  
+
+
+  // Llamar a esta función cada vez que se ajusta el tamaño de la ventana
+  window.addEventListener('resize', ajustarTamañoFlechas);
