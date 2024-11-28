@@ -1,3 +1,37 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+  }
+  
+  @font-face {
+    font-family: 'Take coffee';
+    src: url('../../Resources/tipography/Take\ Coffee.otf');
+  }
+  
+  @font-face {
+    font-family: 'Melts Script';
+    src: url('../../Resources/tipography/Melts\ Script\ Rough\ Sanscript.ttf')
+  }
+  
+  #app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image:
+    linear-gradient(rgba(90, 72, 1, 0.3), rgba(82, 73, 33, 0.3)),  
+    url('../../Resources/img/background3.png');    
+    background-size: cover; 
+    background-position: center;  
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+
 .loading-screen {
     display: flex;
     flex-direction: column;
@@ -22,10 +56,11 @@
 }
 
 h2 {
-    color: #1e3932;
+    color: #f5f8f7;
     font-size: 24px;
     font-weight: bold;
     margin: 15px 0;
+    font-family: 'Melts Script', sans-serif;
 }
 
 @keyframes spin {
@@ -53,3 +88,27 @@ h2 {
     color: #d62b1f;
     margin: 15px 0;
 }
+
+@media (max-width: 768px) {
+
+    h1 {
+      font-size: 3rem; /* Adjust font size for smaller screens */
+    }
+  
+    p {
+      width: 80%;
+      font-size: 0.8rem; /* Adjust font size for smaller screens */
+    }
+  
+    div {
+      width: 80%; /* Increase width for better mobile layout */
+    }
+  
+    #claimForm {
+      width: 90%; /* Increase width for better mobile layout */
+    }
+  
+    input {
+      font-size: 0.8rem; /* Maintain font size for mobile */
+    }
+  }
