@@ -1,4 +1,4 @@
-import { router } from '../routes.js';
+
 import socket from '../socket.js';
 import { IZQUIERDDA, ARRIBA, DERECHA, MAXERRORRES, MAXCICLOTIEMPO, base1, base2 } from '../utils/constantes.js';
 import { flechasBoard, delay, eliminarFlecha } from '../utils/helpers.js';
@@ -22,53 +22,91 @@ export default async function gamePage() {
 	app.innerHTML = `
       <div id="contenedor" class="contenedor">
 	  <div id="player1" class="flechas-column">
-		<div id="Figures">
-	    <img id="Figure1" data-posicion="1" src="/Resources/img/Left1.png">
-        <img id="Figure2" data-posicion="2" src="/Resources/img/Right1.png">
-        <img id="Figure3" data-posicion="3" src="/Resources/img/Up1.png">		
+		<div id="Figures">	
 		</div>
 	  </div>
 	 
-	  <div id="lineatiempo">
+	  <div id="center">
+	  	<div id="lineatiempo">
           <div id="lineatiempo-bar"></div>
 	    </div>
        
-		<div id="lineavida">
-          <div id="lineavida-bar"></div>
-        </div>
+			<div id="lineavida">
+          	<div id="lineavida-bar"></div>
+        	</div>
         
-		<p id="aciertos" class="contador">Aciertos: </p>
-        <p id="errores" class="contador">Errores: </p>
+			<div id="text">
+				<p id="aciertos" class="contador">Aciertos: </p>
+        		<p id="errores" class="contador">Errores: </p>
+			</div>
+
+		<img id="mug" src="/Resources/img/Group4.png">
+	  </div>
 
 		<div id="player2" class="flechas-column">
-		<div ="Figures2">
+		<div id="Figures2">
 		</div>
 		</div>
 		</div>
-        
+    
 		<div id="sensor">
+			<div id="arrows1">
+			<img id="Figure1" data-posicion="1" src="/Resources/img/Left1.png">
+			<img id="Figure3" data-posicion="3" src="/Resources/img/Up1.png">			
+			<img id="Figure2" data-posicion="2" src="/Resources/img/Right1.png">
+			</div>
+			<div id="arrows2">
+			<img id="Figure4" data-posicion="1" src="/Resources/img/Left1.png">
+			<img id="Figure6" data-posicion="3" src="/Resources/img/Up1.png">
+			<img id="Figure5" data-posicion="2" src="/Resources/img/Right1.png">
 		</div>
-
-		<div id="control">
-		<img id="Figure1" data-posicion="1" src="/Resources/img/Left1.png">
-        <img id="Figure2" data-posicion="2" src="/Resources/img/Right1.png">
-        <img id="Figure3" data-posicion="3" src="/Resources/img/Up1.png">		
-        <img id="Figure4" data-posicion="1" src="/Resources/img/Left1.png">
-        <img id="Figure5" data-posicion="2" src="/Resources/img/Right1.png">
-        <img id="Figure6" data-posicion="3" src="/Resources/img/Up1.png">
 		</div>
     `;
 
 	const contenedor = document.getElementById('contenedor');
-
-	alturaContenedor = contenedor.clientHeight;
-	inicioSensor = alturaContenedor - 130; // posy de la caja del sensor
+	alturaContenedor = 600;
+	inicioSensor = alturaContenedor -130; 
 
 	const aciertos = document.getElementById('aciertos');
 
 	const errores = document.getElementById('errores');
+	
+	async function renderBoard() {
+		const deltaY = 10; // Velocidad del movimiento de las flechas
+	
+		while (!gameOver) {
+			await delay(50);
+			for (let k = 0; k < flechasBoard.length && !gameOver; k++) {
+				const element = flechasBoard[k];
+				const flechaCreada = getFlecha(element.buttonId);
+				if (!flechaCreada) continue;
+	
+				// Movimiento vertical
+				element.posy += deltaY;
+				flechaCreada.style.top = element.posy + 'px';
+	
+				// Verificar si la flecha está en el rango del sensor
+				if (element.posy >= inicioSensor && element.posy <= inicioSensor + 100) { // Ajuste de 100 píxeles de tolerancia
+					element.enSensor = true;
+				} else {
+					element.enSensor = false;
+				}
+	
+				// Verificar si la flecha salió de la pantalla
+				if (element.posy > alturaContenedor) {
+					eliminarFlecha(element.buttonId);
+					contadorErrores++;
+					validarJuego();
+				}
+			}
+		}
+	}
+	
+	
 
+	
 	const sensor = document.getElementById('sensor');
+	
 	sensor.addEventListener('click', () => {
 		// Logica de saber si al llegar una tecla desde el
 		// arduino hay una flecha que coincide con tipoflecha
@@ -87,6 +125,34 @@ export default async function gamePage() {
 	renderBoard();
 	animarTiempo();
 }
+
+function validarSensor(tipoFlecha, jugador) {
+    let flechaValida = null;
+
+    for (let k = 0; k < flechasBoard.length; k++) {
+        const element = flechasBoard[k];
+
+        // Verificar si la flecha coincide en tipo y está en la zona del sensor
+        if (element.flecha === tipoFlecha && element.enSensor) {
+            flechaValida = element;
+            break;
+        }
+    }
+
+    if (flechaValida) {
+        eliminarFlecha(flechaValida.buttonId); // Elimina la flecha del array y del DOM
+        contadorAciertos++;
+        console.log('Acierto en el sensor:', tipoFlecha);
+    } else {
+        contadorErrores++;
+        console.log('Error en el sensor:', tipoFlecha);
+    }
+
+    // Actualizar la interfaz y verificar fin del juego
+    validarJuego();
+}
+
+
 
 function animarTiempo() {
 	const lineatiempoBar = document.querySelector('#lineatiempo-bar');
@@ -112,41 +178,6 @@ function animarTiempo() {
 	}, 1000);
 }
 
-function validarSensor(tipoFlecha = IZQUIERDDA, jugador = 1) {
-	// Con el tipo flecha y flechasBoard determinar si en
-	// el sensor existe una flecha y hace match
-
-	let exito = false;
-	let coincide = 0;
-	for (let k = 0; k < flechasBoard.length; k++) {
-		const element = flechasBoard[k];
-		if (element.flecha == tipoFlecha) {
-			if (element.posy > inicioSensor && element.posy < alturaContenedor) {
-				// esa flecha esta dentro del sensor
-				exito = true;
-				//const posxFlecha = base1 + element.flecha * (100 + 5);
-				if (jugador == 1 && element.posx < base2) {
-					coincide = element.buttonId;
-					console.log('Exito Jugador 1', jugador);
-				}
-				if (jugador == 2 && element.posx > base2) {
-					coincide = element.buttonId;
-					console.log('Exito Jugador 1', jugador);
-				}
-
-				//break;
-			}
-		}
-	}
-	if (exito) {
-		contadorAciertos++;
-		console.log('Exito en el sensor', tipoFlecha);
-		eliminarFlecha(coincide); // Solo del array no se elimana del DOM
-		return;
-	}
-	contadorErrores++;
-	console.log('Error en el sensor', tipoFlecha);
-}
 
 // Ejemplo de cómo utilizar la función cuando creas una flecha
 function crearFlecha(buttonData, jugador) {
@@ -179,44 +210,6 @@ function getFlecha(buttonId) {
 	return document.getElementById(`tablero${buttonId}`);
 }
 
-async function renderBoard() {
-	// Incremento step del movimiento de las flechas
-	const deltaY = 10; // pixels del movimiento de las flechas
-
-	while (!gameOver) {
-		//console.log('Entra a renderBoard', flechasBoard.length);
-		// Tiempo de espera para los refrescos de pantalla
-		await delay(50);
-		for (let k = 0; k < flechasBoard.length && !gameOver; k++) {
-			const element = flechasBoard[k];
-			//console.log('renderBoard<element>', element);
-
-			// Obtenemos el objeto del DOM <div>
-			const flechaCreada = getFlecha(element.buttonId);
-			if (!flechaCreada) continue;
-			// Movimiento vertical
-			const valorFila = element.posy;
-			flechaCreada.style.top = valorFila + 'px';
-			//console.log('renderBoard<valorFila>', valorFila);
-
-			// Ubicar la columna sobre la bajada de la imagen
-			const valorColumna = element.posx;
-			flechaCreada.style.left = valorColumna + 'px';
-			//console.log('renderBoard<valorColumna>', valorColumna);
-
-			// Incrementamos para el avance en la siguiente render
-			flechasBoard[k].posy = valorFila + deltaY;
-
-			// Validamos si el flecha ya salio de la pantalla para quitarla
-			if (valorFila > alturaContenedor) {
-				eliminarFlecha(element.buttonId); // Solo del array no se elimana del DOM
-				contadorErrores++;
-				validarJuego();
-				console.log('renderBoard<eliminarFlecha>');
-			}
-		}
-	}
-}
 
 function validarJuego() {
 	let deltaVidas = 100 / MAXERRORRES;
@@ -353,9 +346,10 @@ function ajustarTamañoFlechas() {
     });
 }
 
+  // Llamar a esta función cada vez que se ajusta el tamaño de la ventana
+
+  window.addEventListener('resize', ajustarTamañoFlechas);
+
 
   
-
-
-  // Llamar a esta función cada vez que se ajusta el tamaño de la ventana
-  window.addEventListener('resize', ajustarTamañoFlechas);
+  
