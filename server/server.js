@@ -99,6 +99,20 @@ datosFromArduino.on('data', (data) => {
 					return
 				}
 			}
+
+			if (getPaginaActual() === 'qrPage') {
+				if(flechaPresionada === "Derecha1" || flechaPresionada === "Derecha2"){
+					// Si estamos en tutorialPage le emitimos al front que cambie de screen
+					getIO().emit('navigateTo', '/');
+					setPaginaActual('landingPage');
+					console.log('Boton procesado<landingPage>:', buttonData);
+					return
+				}
+			}
+
+
+
+
 			console.log('Boton procesad <SinPage>:', buttonData);
 		}
 	} catch (err) {
@@ -195,13 +209,6 @@ getIO().on('connection', (socket) => {
 });
 
 const surveyResponses = [];
-
-
-// socket.on('submitForm', (data) => {
-// 	surveyResponses.push(data);
-// 	console.log('Survey response added:', data);
-// 	console.log('Current survey responses:', surveyResponses);
-// });
 
 // Your existing socket event handlers...
 
