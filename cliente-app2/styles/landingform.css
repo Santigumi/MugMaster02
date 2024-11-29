@@ -121,7 +121,7 @@ input:focus {
 }
 
 img {
-  width: 40%;
+  width: 15%;
 }
 
 @media (max-width: 768px) {
@@ -151,6 +151,10 @@ img {
 
   input {
     font-size: 0.8rem; /* Maintain font size for mobile */
+  }
+
+  img {
+    width: 25%;
   }
 }
 
