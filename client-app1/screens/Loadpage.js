@@ -20,7 +20,7 @@ export default async function loadPage() {
 
 function loadPage1() {
 	return `
-        <p id="contador">1...</p>
+        <p id="contador">3...</p>
     `;
 }
 function loadPage2() {
@@ -30,6 +30,6 @@ function loadPage2() {
 }
 function loadPage3() {
 	return `
-        <p id="contador">3...</p>
+        <p id="contador">1...</p>
     `;
 }
